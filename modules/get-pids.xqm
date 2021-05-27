@@ -9,10 +9,10 @@ module namespace pids = "http://canofbees.org/xq/pids/";
 
 (:~
  : queries the tuples endpoint of risearch for a list of book OBJs in a given collection
- : @url a Fedora repository URL
- : @user a Fedora user
- : @pass a Fedora password
- : @collection a valid Fedora collection PID
+ : @param $url a Fedora repository URL
+ : @param $user a Fedora user
+ : @param $pass a Fedora password
+ : @param $collection a valid Fedora collection PID
  :
  : @return an XML response in the sparql namespace
  :)
@@ -40,10 +40,10 @@ declare function pids:get-books(
 
 (:~
  : queries the tuples endpoint of Fedora's risearch for a list of page PIDs for a given book OBJ.
- : @url a Fedora repository URL
- : @user a Fedora user
- : @pass a Fedora password
- : @book a book OBJ PID
+ : @param $url a Fedora repository URL
+ : @param $user a Fedora user
+ : @param $pass a Fedora password
+ : @param $book a book OBJ PID
  :
  : @return an XML formatted list of page PIDs with page numbers.
  :)

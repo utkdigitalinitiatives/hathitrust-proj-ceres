@@ -18,6 +18,14 @@ declare function dsids:grab-metadata(
   )
 };
 
+(:~
+ : For a given DSID, returns an item to be serialized to disk.
+ : @param $url a Fedora repository URL
+ : @param $pid a Fedora PID
+ : @param $dsid a Fedora datastream id
+ :
+ : @return an item
+ :)
 declare function dsids:get-dsids(
   $url as xs:string?,
   $pid as xs:string?,
