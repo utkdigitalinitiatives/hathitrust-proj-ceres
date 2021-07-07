@@ -16,6 +16,11 @@ declare variable $ezid-url external := "";
 
 declare variable $fedora-url external := "";
 
+file:write-text-lines(
+  $path || "data/PIDs-ARKs-SIPs.csv",
+  ``["book","ark","sip"]``
+),
+
 for $book in file:descendants($path || "data/")[ends-with(., '-pages.xml')]
 let $pid := $book => substring-before('-pages.xml') => translate('-', ':')
 let $mods := fetch:xml($fedora-url || "objects/" || $pid || "/datastreams/MODS/content")
@@ -39,7 +44,12 @@ return(
   if ($request[1]//@status/data() = 201)
   then file:append-text-lines(
     $path || "data/" || "PIDs-ARKs-SIPs.csv",
-    string-join(($pid, $request[2] => substring-after('success: ')), ',')
+    string-join(
+      ($pid,
+        $request[2] => substring-after('success: '),
+        $request[2] => substring-after('success') => translate(":", "+") => translate("/", "=")
+    ),
+      ',')
     )
   else "There was a problem minting an EZID for " || $pid || ". Request response was " || $request[1]//@status/data() || ". "
 )
