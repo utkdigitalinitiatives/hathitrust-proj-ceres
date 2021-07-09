@@ -8,9 +8,9 @@ declare variable $path := file:current-dir();
 declare variable $fedora-url external := "";
 declare variable $write-path external := "";
 
-for $object in csv:doc($path || "data/" || "PIDs-ARKs-SIPs.csv")/record
-let $fs-pid := $object/book/text() => translate(':', '-')
-let $fs-ark := $object/ark/text() => translate(':', '-') => translate('/', '-')
+for $record in csv:doc($path || "data/" || "PIDs-ARKs-SIPs.csv")/record
+let $fs-pid := $record/book/text() => translate(':', '-')
+let $fs-ark := $record/ark/text() => translate(':', '-') => translate('/', '-')
 let $pages := doc($path || "data/" || $fs-pid || "-pages.xml")
 
 return(
