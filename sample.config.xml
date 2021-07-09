@@ -1,8 +1,8 @@
 <conf>
-  <fedora-user></fedora-user>
-  <fedora-pass></fedora-pass>
-  <fedora-url></fedora-url>
-  <ezid-user></ezid-user>
-  <ezid-pass></ezid-pass>
-  <ezid-url></ezid-url>
+  <fedora-user>fedora user</fedora-user>
+  <fedora-pass>fedora password</fedora-pass>
+  <fedora-url>http://some.url:8080/fedora</fedora-url>
+  <ezid-user>ezid user</ezid-user>
+  <ezid-pass>ezid password</ezid-pass>
+  <ezid-url>https://your.ezid.shoulder</ezid-url>
 </conf>
