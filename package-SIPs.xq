@@ -50,15 +50,9 @@ let $dir-name := $entry/book/text() => translate(':', '-')
 let $sip-name := $entry/sip/text()
 let $dir := $path || "data/" || $dir-name
 return(
-  "sip-metadata: ",
   local:sip-metadata($dir),
-  "files flowr: ",
   let $files := file:list($dir)
-  return(
-    $dir,
-    $files
-  ) 
-(:  let $zip :=
+  let $zip :=
     archive:create(
       $files,
       for $file in $files
@@ -66,7 +60,7 @@ return(
     )
   return
     file:write-binary(
-      $path || "/data/" || $sip-name || ".zip",
-      $zip
-    ):)
+    $path || "/data/" || $sip-name || ".zip",
+    $zip
+  )
 )
