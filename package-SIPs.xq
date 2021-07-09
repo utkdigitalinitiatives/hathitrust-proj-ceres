@@ -11,9 +11,10 @@ declare function local:md5-file(
 declare function local:sip-metadata(
   $path as xs:string?
 ) as item()* {
-  for $child in file:children($path)[file:is-dir(.)]
+  for $child in file:children($path)
   return(
-    file:append-text-lines(
+    $child
+    (:file:append-text-lines(
       $child || "meta.yml",
       (
         "capture_date: " || "",
@@ -44,18 +45,24 @@ declare function local:sip-metadata(
     return file:append-text-lines(
       $child || "checksum.md5",
       $checksums
-    )
+    ):)
   )
 };
 
-for $entry in csv:doc($path || "data/PIDs-ARKs-SIPs.csv")//record
+for $entry in csv:doc($path || "data/PIDs-ARKs-SIPs.csv", map {"header": true()})//record
 let $dir-name := $entry/book/text() => translate(':', '-')
 let $sip-name := $entry/sip/text()
-let $dir := $path || "/data/" || $dir-name
+let $dir := $path || "data/" || $dir-name
 return(
+  "sip-metadata: ",
   local:sip-metadata($dir),
+  "files flowr: ",
   let $files := file:list($dir)
-  let $zip :=
+  return(
+    $dir,
+    $files
+  ) 
+(:  let $zip :=
     archive:create(
       $files,
       for $file in $files
@@ -65,5 +72,5 @@ return(
     file:write-binary(
       $path || "/data/" || $sip-name || ".zip",
       $zip
-    )
+    ):)
 )
