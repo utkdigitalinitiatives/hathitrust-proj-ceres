@@ -21,9 +21,9 @@ file:write-text-lines(
   ``["book","ark","sip"]``
 ),
 
-for $book in file:descendants($path || "data/")[ends-with(., '-pages.xml')]
+for $book in file:list($path || "data/")[ends-with(., '-pages.xml')]
 let $pid := $book => substring-before('-pages.xml') => translate('-', ':')
-let $mods := fetch:xml($fedora-url || "objects/" || $pid || "/datastreams/MODS/content")
+let $mods := fetch:xml($fedora-url || "/objects/" || $pid || "/datastreams/MODS/content")
 
 let $request :=
   http:send-request(
@@ -47,7 +47,7 @@ return(
     string-join(
       ($pid,
         $request[2] => substring-after('success: '),
-        $request[2] => substring-after('success') => translate(":", "+") => translate("/", "=")
+        $request[2] => substring-after('success: ') => translate(":", "+") => translate("/", "=")
     ),
       ',')
     )
