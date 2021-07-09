@@ -11,41 +11,37 @@ declare function local:md5-file(
 declare function local:sip-metadata(
   $path as xs:string?
 ) as item()* {
-  for $child in file:children($path)
-  return(
-    $child
-    (:file:append-text-lines(
-      $child || "meta.yml",
+  file:append-text-lines(
+  $path || "/" || "meta.yml",
+    (
+      "capture_date: " || "",
+      "scanner_user: University of Tennessee, Knoxville. Libraries: Digital Production Lab",
+      out:nl(),
+      "contone_resolution_dpi: " || "",
+      "scanning_order: left-to-right",
+      "reading_order: left-to-right",
+      out:nl(),
+      "pagedata:",
       (
-        "capture_date: " || "",
-        "scanner_user: University of Tennessee, Knoxville. Libraries: Digital Production Lab",
-        out:nl(),
-        "contone_resolution_dpi: " || "",
-        "scanning_order: left-to-right",
-        "reading_order: left-to-right",
-        out:nl(),
-        "pagedata:",
-        (
-          for $tif in file:list($child, false(), '*.tif')
-          order by $tif ascending
-          count $count
-          return(
-            "  " || $tif || ": { orderlabel: " || '"' || $count || '" }'
-          )
-        )
-      )
-    ),
-    let $checksums :=
-      (
-        for $grandchild in file:descendants($child)
+        for $tif in file:list($path, false(), '*.tif')
+        order by $tif ascending
+        count $count
         return(
-          local:md5-file($grandchild) || " " || file:name($grandchild)
+          "  " || $tif || ": { orderlabel: " || '"' || $count || '" }'
         )
       )
-    return file:append-text-lines(
-      $child || "checksum.md5",
-      $checksums
-    ):)
+    )
+  ),
+  let $checksums :=
+    (
+      for $file in file:descendants($path)
+      return(
+        local:md5-file($file) || " " || file:name($file)
+      )
+    )
+  return file:append-text-lines(
+    $path || "/" || "checksum.md5",
+    $checksums
   )
 };
 
