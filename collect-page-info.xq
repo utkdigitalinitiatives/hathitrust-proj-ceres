@@ -22,7 +22,7 @@ return(
   (: return our page information for each book :)
   file:write(
     $path || "data/" || $pid => replace(':', '-') || "-pages.xml",
-    pids:get-pages($fedora-url, $fedora-user, $fedora-pass, $book),
+    pids:get-pages($fedora-url, $fedora-user, $fedora-pass, $pid),
     map { "method": "xml" }
   ),
   (: create a holding directory :)
