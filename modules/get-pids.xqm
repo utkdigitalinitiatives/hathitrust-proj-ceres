@@ -24,7 +24,7 @@ declare function pids:get-books(
 ) as item()* {
   http:send-request(
     <http:request method="GET" username="{ $user }" password="{ $pass }" auth-method="Basic" send-authorization="true"/>,
-    $url || "risearch?type=tuples&amp;flush=false&amp;lang=sparql&amp;format=sparql&amp;query=" ||
+    $url || "/risearch?type=tuples&amp;flush=false&amp;lang=sparql&amp;format=sparql&amp;query=" ||
     ``[
       PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
       PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
@@ -52,11 +52,11 @@ declare function pids:get-pages(
   $user as xs:string?,
   $pass as xs:string?,
   $book as xs:string?
-) as item() {
+) as item()* {
   http:send-request(
     <http:request method="GET" username="{ $user }" password="{ $pass }"
       auth-method="Basic" send-authorization="true"/>,
-    $url || "risearch?type=tuples&amp;flush=false&amp;lang=sparql&amp;format=sparql&amp;query=" ||
+    $url || "/risearch?type=tuples&amp;flush=false&amp;lang=sparql&amp;format=sparql&amp;query=" ||
     ``[
       PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
       PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
