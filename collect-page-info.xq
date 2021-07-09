@@ -16,6 +16,8 @@ declare variable $collection external := "";
  : For a sequence of books in a collection, return a sequence of page info files
  : to the data directory.
  :)
+if (file:exists($path || "data/")) then () else file:create-dir($path || "data/"),
+
 for $full-pid in pids:get-books($fedora-url, $fedora-user, $fedora-user, $collection)[2]//result:pids/@uri/data()
 let $pid := $full-pid => substring-after('/')
 return(
