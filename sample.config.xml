@@ -1,0 +1,8 @@
+<conf>
+  <fedora-user></fedora-user>
+  <fedora-pass></fedora-pass>
+  <fedora-url></fedora-url>
+  <ezid-user></ezid-user>
+  <ezid-pass></ezid-pass>
+  <ezid-url></ezid-url>
+</conf>
