@@ -1,2 +1,5 @@
 .idea
 data/**
+
+# ignore our config.xml
+config.xml
