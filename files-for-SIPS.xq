@@ -5,8 +5,9 @@ import module namespace dsids = "http://canofbees.org/xq/dsids/"
 declare namespace result = "http://www.w3.org/2001/sw/DataAccess/rf1/result";
 
 declare variable $path := file:current-dir();
-declare variable $fedora-url external := "";
-declare variable $write-path external := "";
+declare variable $conf := doc($path || "config.xml")/conf;
+declare variable $fedora-url external := $conf/fedora-url/text();
+declare variable $write-path external := $conf/write-path/text();
 
 for $record in csv:doc($path || "data/" || "PIDs-ARKs-SIPs.csv", map { "header": true() })//record
 let $fs-pid := $record/book/text() => translate(':', '-')
