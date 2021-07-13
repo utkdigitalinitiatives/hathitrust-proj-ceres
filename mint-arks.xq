@@ -8,13 +8,13 @@ declare namespace result = "http://www.w3.org/2001/sw/DataAccess/rf1/result";
 declare namespace mods = "http://www.loc.gov/mods/v3";
 
 declare variable $path := file:current-dir();
-declare variable $fedora-user external := convert:string-to-base64("");
-declare variable $fedora-pass external := convert:string-to-base64("");
-declare variable $ezid-user external := convert:string-to-base64("");
-declare variable $ezid-pass external := convert:string-to-base64("");
-declare variable $ezid-url external := "";
-
-declare variable $fedora-url external := "";
+declare variable $conf := doc($path || "config.xml")/conf;
+declare variable $fedora-url external := $conf/fedora-url/text();
+declare variable $fedora-user external := $conf/fedora-user/text() => convert:string-to-base64() => string();
+declare variable $fedora-pass external := $conf/fedora-pass/text() => convert:string-to-base64() => string();
+declare variable $ezid-user external := $conf/ezid-user/text();
+declare variable $ezid-pass external := $conf/ezid-pass/text();
+declare variable $ezid-url external := $conf/ezid-url/text();
 
 file:write-text-lines(
   $path || "data/PIDs-ARKs-SIPs.csv",
@@ -51,5 +51,5 @@ return(
     ),
       ',')
     )
-  else "There was a problem minting an EZID for " || $pid || ". Request response was " || $request[1]//@status/data() || ". "
+  else "There was a problem minting an EZID for " || $pid || ". Request response was " || $request[1]//@status/data() || ". Message was " || $request[1]//@message/data() || "."
 )
