@@ -7,10 +7,11 @@ import module namespace pids = "http://canofbees.org/xq/pids/"
 
 declare namespace result = "http://www.w3.org/2001/sw/DataAccess/rf1/result";
 declare variable $path := file:current-dir();
-declare variable $fedora-url external := "";
-declare variable $fedora-user external := convert:string-to-base64("");
-declare variable $fedora-pass external := convert:string-to-base64("");
-declare variable $collection external := "";
+declare variable $conf := doc($path || "config.xml")/conf;
+declare variable $fedora-url external := $conf/fedora-url/text();
+declare variable $fedora-user external := $conf/fedora-user/text() => convert:string-to-base64() => string();
+declare variable $fedora-pass external := $conf/fedora-pass/text() => convert:string-to-base64() => string();
+declare variable $collection external := $conf/collection/text();
 
 (:
  : For a sequence of books in a collection, return a sequence of page info files
