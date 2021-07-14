@@ -1,6 +1,8 @@
 xquery version "3.1";
 
 declare variable $path := file:current-dir();
+declare variable $conf := doc($path || "config.xml")/conf;
+declare variable $write-path := $conf/write-path/text();
 
 declare function local:md5-file(
   $path as xs:string?

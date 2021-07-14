@@ -34,7 +34,7 @@ return(
       map { "method": "text" }
     ),
     (: fetch OBJ :)
-    file:write(
+    file:write-binary(
       $write-path || "data/" || $fs-pid || "/" || string($pg-number) || ".tif",
       dsids:get-dsids($fedora-url, $pid, "OBJ")
     )
