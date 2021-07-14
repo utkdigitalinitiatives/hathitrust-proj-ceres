@@ -7,6 +7,10 @@ xquery version "3.1";
 
 module namespace dsids = "http://canofbees.org/xq/dsids/";
 
+declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace ifd0 = "http://ns.exiftool.org/EXIF/IFD0/1.0/";
+declare namespace xmp-xmp = "http://ns.exiftool.org/XMP/XMP-xmp/1.0";
+
 declare function dsids:grab-metadata(
   $url as xs:string?,
   $metadata-dsid as xs:string?,
@@ -40,3 +44,18 @@ declare function dsids:get-dsids(
     default return "No matching DSID"
 };
 
+declare function dsids:exif(
+  $path as xs:string?
+) as item()* {
+  try {
+    proc:system('exiftool', ("-X", $path)) => parse-xml()
+  } catch proc:error {
+    "exiftool is not available. " || $err:description
+  }
+};
+
+declare function dsids:get-create-date(
+  $path as xs:string
+) as xs:string {
+  dsids:exif($path)//*:CreateDate/text() => substring-before(' ') => translate(':', '-')
+};
