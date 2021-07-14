@@ -1,5 +1,8 @@
 xquery version "3.1";
 
+import module namespace dsids = "http://canofbees.org/xq/dsids/"
+  at "modules/get-dsids.xqm";
+
 declare variable $path := file:current-dir();
 declare variable $conf := doc($path || "config.xml")/conf;
 declare variable $write-path := $conf/write-path/text();
@@ -16,8 +19,8 @@ declare function local:sip-metadata(
   file:append-text-lines(
   $path || "/" || "meta.yml",
     (
-      "capture_date: " || "",
-      "scanner_user: University of Tennessee, Knoxville. Libraries: Digital Production Lab",
+      "capture_date: " || dsids:get-create-date($path || "/00000001.tif"),
+      "scanner_user: " || '"University of Tennessee, Knoxville. Libraries: Digital Production Lab"',
       out:nl(),
       "contone_resolution_dpi: " || "",
       "scanning_order: left-to-right",
