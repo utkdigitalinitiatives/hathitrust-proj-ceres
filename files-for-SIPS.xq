@@ -11,7 +11,6 @@ declare variable $write-path external := $conf/write-path/text();
 
 for $record in csv:doc($path || "data/" || "PIDs-ARKs-SIPs.csv", map { "header": true() })//record
 let $fs-pid := $record/book/text() => translate(':', '-')
-let $fs-ark := $record/ark/text() => translate(':', '-') => translate('/', '-')
 let $pages := doc($path || "data/" || $fs-pid || "-pages.xml")
 
 return(
