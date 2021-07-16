@@ -5,4 +5,6 @@
   <ezid-user>ezid user</ezid-user>
   <ezid-pass>ezid password</ezid-pass>
   <ezid-url>https://your.ezid.shoulder</ezid-url>
+  <collection>this:collection</collection>
+  <write-path>/tmp/collection</write-path>
 </conf>
