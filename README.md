@@ -34,7 +34,7 @@ The scripts can also be run from the command line; simply copy `sample.config.xm
 
 #### Running ####
 Run the scripts in the following order:
-1. collect-page-info.xq
-2. mint-arks.xq
-3. files-for-SIPS.xq
-4. package-SIPs.xq
+1. `collect-page-info.xq`
+2. `mint-arks.xq`
+3. `files-for-SIPS.xq`
+4. `package-SIPs.xq`
