@@ -1,24 +1,11 @@
 ## Notes and Things: HathiTrust and Project Ceres ##
 
-### metadata ###
-To keep things simple, DC. I think the following will work:
+### How to use this repository ###
+This repository contains a set of XQuery scripts for querying, acquiring, and packaging Fedora book OBJs for HathiTrust. These scripts do ***not*** cover validation; HathiTrust provides a [validation utility](https://github.com/hathitrust/ht_sip_validator) that can be installed and used to verify the output.
 
-```
-dc.title: $title
-dc.date: $date
-dc.publisher: University of Tennessee (Knoxville campus). Agricultural Service Extension
-dc.type: Text
-```
+#### Requirements ####
+* Java (minimally ver. 8)
+* [BaseX](https://basex.org) ([downloads available here](https://files.basex.org/releases/9.5.2/BaseX952.zip))
 
-### pull back book PIDs ###
-
-```sparql
-PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
-PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
-SELECT ?pids
-FROM <#ri>
-WHERE {
-  ?pids fedora-model:hasModel <info:fedora/islandora:bookCModel> ;
-    fedora-rels-ext:isMemberOfCollection <info:fedora/collections:agrtfhs> .
-}
-```
+#### Installation ####
+After downloading and extracting the BaseX zip archive, clone this repository into the `$basex/src/` directory.
